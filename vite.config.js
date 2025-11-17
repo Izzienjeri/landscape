@@ -5,12 +5,21 @@ import { compression } from 'vite-plugin-compression2';
 
 export default defineConfig({
   plugins: [
-    react(),
+    react({
+      // Optimize React refresh
+      fastRefresh: true,
+      babel: {
+        plugins: [
+          // Remove console logs in production
+          ['transform-remove-console', { exclude: ['error', 'warn'] }]
+        ]
+      }
+    }),
     VitePWA({
       registerType: 'autoUpdate',
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,webp}'],
-        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024, // ⬅️ This is the fix (5 MB limit)
+        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
@@ -47,12 +56,12 @@ export default defineConfig({
           {
             src: '/logo.webp',
             sizes: '192x192',
-            type: 'image/jpeg'
+            type: 'image/webp'
           },
           {
             src: '/logo.webp',
             sizes: '512x512',
-            type: 'image/jpeg'
+            type: 'image/webp'
           }
         ]
       }
@@ -68,24 +77,80 @@ export default defineConfig({
   ],
   base: '/',
   build: {
+    // Target modern browsers
+    target: 'es2020',
+    
+    // Enable minification
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true
+      }
+    },
+    
+    // Optimize chunk splitting
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ['react', 'react-dom'],
-          router: ['react-router-dom'],
-          animations: ['framer-motion'],
-          icons: ['react-icons']
-        }
+          // Core React dependencies
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          
+          // UI libraries
+          'ui-vendor': ['@headlessui/react', '@heroicons/react'],
+          
+          // Animation library (heavy)
+          'animation': ['framer-motion'],
+          
+          // Icons (heavy - split by usage)
+          'icons': ['react-icons/fa', 'react-icons/md'],
+          
+          // Helmet for SEO
+          'helmet': ['react-helmet-async'],
+        },
+        
+        // Better file naming
+        chunkFileNames: 'assets/[name]-[hash].js',
+        entryFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash].[ext]'
       }
     },
-    chunkSizeWarningLimit: 1000
+    
+    // Increase chunk size warning limit
+    chunkSizeWarningLimit: 800,
+    
+    // Optimize CSS
+    cssCodeSplit: true,
+    
+    // Source maps for production debugging (can disable for smaller builds)
+    sourcemap: false
   },
+  
+  // Optimize dependencies pre-bundling
+  optimizeDeps: {
+    include: [
+      'react', 
+      'react-dom', 
+      'react-router-dom', 
+      'framer-motion',
+      '@headlessui/react',
+      '@heroicons/react'
+    ],
+    exclude: ['@vite/client', '@vite/env']
+  },
+  
+  // Server optimization
   server: {
-    headers: {
-      'Cache-Control': 'public, max-age=31536000, immutable'
+    port: 3000,
+    strictPort: false,
+    hmr: {
+      overlay: true
     }
   },
-  optimizeDeps: {
-    include: ['react', 'react-dom', 'react-router-dom', 'framer-motion']
+  
+  // Preview optimization
+  preview: {
+    port: 4173,
+    strictPort: false
   }
 });

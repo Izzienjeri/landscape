@@ -6,11 +6,13 @@ import sharp from 'sharp';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Directory to optimize
 const inputDir = path.join(__dirname, '../public');
-
-// Allowed extensions
 const allowedExtensions = ['.jpg', '.jpeg', '.png'];
+
+// Optimization settings
+const QUALITY = 75; // Reduced from 80
+const MAX_WIDTH = 1920;
+const MAX_HEIGHT = 1920;
 
 const optimizeAndOverwrite = async (dir) => {
   const files = fs.readdirSync(dir);
@@ -20,7 +22,6 @@ const optimizeAndOverwrite = async (dir) => {
     const stat = fs.statSync(fullPath);
 
     if (stat.isDirectory()) {
-      // Recurse into subdirectories
       await optimizeAndOverwrite(fullPath);
     } else {
       const ext = path.extname(file).toLowerCase();
@@ -30,20 +31,46 @@ const optimizeAndOverwrite = async (dir) => {
         const webpPath = path.join(dir, `${baseName}.webp`);
 
         try {
-          await sharp(fullPath)
-            .webp({ quality: 80 })
+          // Get original dimensions
+          const metadata = await sharp(fullPath).metadata();
+          
+          // Resize if too large
+          const shouldResize = metadata.width > MAX_WIDTH || metadata.height > MAX_HEIGHT;
+          
+          let pipeline = sharp(fullPath);
+          
+          if (shouldResize) {
+            pipeline = pipeline.resize(MAX_WIDTH, MAX_HEIGHT, {
+              withoutEnlargement: true,
+              fit: 'inside'
+            });
+          }
+
+          await pipeline
+            .webp({ 
+              quality: QUALITY,
+              effort: 6, // Max compression effort
+              smartSubsample: true
+            })
             .toFile(webpPath);
 
-          fs.unlinkSync(fullPath); // Delete original file
-          console.log(`✔ Converted and replaced: ${file} → ${baseName}.webp`);
+          // Delete original
+          fs.unlinkSync(fullPath);
+          
+          const originalSize = stat.size;
+          const newSize = fs.statSync(webpPath).size;
+          const savings = ((originalSize - newSize) / originalSize * 100).toFixed(1);
+          
+          console.log(`✔ ${file} → ${baseName}.webp (${savings}% smaller)`);
         } catch (err) {
-          console.error(`✖ Error processing ${file}:`, err);
+          console.error(`✖ Error processing ${file}:`, err.message);
         }
       }
     }
   }
 };
 
+console.log('🖼️  Starting image optimization...\n');
 optimizeAndOverwrite(inputDir).then(() => {
-  console.log('✅ All eligible images have been converted to .webp and originals deleted.');
+  console.log('\n✅ All images optimized and converted to WebP!');
 });

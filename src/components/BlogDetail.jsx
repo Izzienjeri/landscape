@@ -305,7 +305,7 @@ export default function BlogDetail() {
     if (post) {
       const currentTags = post.tags || [];
       const related = Object.entries(blogPosts)
-        .filter(([key, blog]) => key !== slug)
+        .filter(([key]) => key !== slug)
         .map(([key, blog]) => {
           let score = 0;
           if (blog.category === post.category) score += 2;
@@ -331,7 +331,7 @@ export default function BlogDetail() {
       </Helmet>
 
       <div className="max-w-3xl mx-auto">
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-[var(--primary-green)] mb-4">{post.title}</h1>
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-(--primary-green) mb-4">{post.title}</h1>
         <p className="text-sm text-gray-500 mb-8">Published: {post.date}</p>
 
         <div className="prose prose-lg max-w-none space-y-6">
@@ -356,7 +356,7 @@ export default function BlogDetail() {
           })}
         </div>
 
-        <Link to="/blog" className="mt-10 inline-block text-[var(--primary-green)] hover:underline">
+        <Link to="/blog" className="mt-10 inline-block text-(--primary-green) hover:underline">
           ← Back to Blog
         </Link>
 
@@ -370,7 +370,7 @@ export default function BlogDetail() {
                 key={key}
                 className="block p-4 border border-gray-200 rounded-md hover:bg-gray-50"
               >
-                <h4 className="text-lg font-semibold text-[var(--primary-green)]">{related.title}</h4>
+                <h4 className="text-lg font-semibold text-(--primary-green)">{related.title}</h4>
                 <p className="text-sm text-gray-600">{related.date}</p>
               </Link>
             ))}

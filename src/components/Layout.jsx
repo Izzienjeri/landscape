@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import { Dialog } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import AboutUsDetails from './AboutUsDetails';
+import PropTypes from 'prop-types';
 
 const navigation = [
   { name: 'Home', href: '/' },
@@ -129,7 +130,7 @@ export default function Layout({ children }) {
 
       <div className="min-h-screen flex flex-col bg-white">
         {/* Contact Strip */}
-        <div className="bg-[var(--primary-green)] border-b text-white text-xs">
+        <div className="bg-(--primary-green) border-b text-white text-xs">
           <div className="flex justify-between items-center px-4 py-3 max-w-7xl mx-auto">
             {/* Contact Info */}
             <div className="flex items-center gap-4 flex-wrap">
@@ -173,7 +174,7 @@ export default function Layout({ children }) {
         </div>
 
         {/* Header */}
-        <header className="bg-white border-b shadow-sm relative z-50 sticky top-0">
+        <header className="bg-white border-b shadow-sm relative z-50 top-0">
           <nav className="flex items-center justify-between max-w-7xl mx-auto px-4 py-1">
             {/* Logo */}
             <div className="flex items-center">
@@ -200,7 +201,7 @@ export default function Layout({ children }) {
                     ref={aboutDropdownRef}
                   >
                     <button
-                      className="flex items-center gap-1 text-[var(--secondary-blue)] font-medium text-sm hover:underline hover:text-[var(--secondary-green)] transition-colors"
+                      className="flex items-center gap-1 text-(--secondary-blue) font-medium text-sm hover:underline hover:text-(--secondary-green) transition-colors"
                       onClick={(e) => {
                         e.preventDefault();
                         setAboutDropdownOpen((open) => !open);
@@ -218,7 +219,7 @@ export default function Layout({ children }) {
                           <Link
                             key={sec.id}
                             to={`/about-us/${sec.id}`}
-                            className="block px-4 py-2 text-[var(--secondary-blue)] hover:bg-[var(--light-green)] hover:text-white text-sm"
+                            className="block px-4 py-2 text-(--secondary-blue) hover:bg-(--light-green) hover:text-white text-sm"
                             onClick={() => setAboutDropdownOpen(false)}
                           >
                             {sec.title}
@@ -233,8 +234,8 @@ export default function Layout({ children }) {
                     to={item.href}
                     onClick={item.name === 'Get A Quote' ? (e) => { e.preventDefault(); setQuoteModalOpen(true); } : undefined}
                     className={`${item.name === 'Get A Quote'
-                      ? 'text-[var(--secondary-blue)] bg-[var(--off-white)] px-4 py-2 text-sm font-semibold border-2 border-[var(--secondary-blue)] hover:bg-[var(--light-green)]'
-                      : 'text-[var(--secondary-blue)] font-medium text-sm hover:underline hover:text-[var(--secondary-green)]'
+                      ? 'text-(--secondary-blue) bg-(--off-white) px-4 py-2 text-sm font-semibold border-2 border-(--secondary-blue) hover:bg-(--light-green)'
+                      : 'text-(--secondary-blue) font-medium text-sm hover:underline hover:text-(--secondary-green)'
                       } transition-colors`}
                   >
                     {item.name}
@@ -322,20 +323,20 @@ export default function Layout({ children }) {
     <Dialog.Panel className="bg-white rounded-lg shadow-lg max-w-md w-full p-6 relative text-gray-800 space-y-6">
       <h1 className="text-2xl font-bold text-center">Get A Quote Now</h1>
       <p className="text-sm text-center">
-        Contact us now to get a quote or book a site visit. We're here to help you transform your outdoor space!
+        Contact us now to get a quote or book a site visit. We&apos;re here to help you transform your outdoor space!
       </p>
 
       <div className="space-y-4">
         <a
           href="mailto:info@youlandscape.co.ke"
-          className="flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium text-white bg-[var(--light-green)] hover:bg-[var(--orange)] rounded"
+          className="flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium text-white bg-(--light-green) hover:bg-(--orange) rounded"
         >
           <FaEnvelope />
           Email Us
         </a>
         <a
           href="tel:+254707301563"
-          className="flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium text-white bg-[var(--light-green)] hover:bg-[var(--orange)] rounded"
+          className="flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium text-white bg-(--light-green) hover:bg-(--orange) rounded"
         >
           <FaPhoneAlt />
           Call Us
@@ -344,7 +345,7 @@ export default function Layout({ children }) {
           href="https://wa.me/254707301563"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium text-white bg-[var(--light-green)] hover:bg-[var(--orange)] rounded"
+          className="flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium text-white bg-(--light-green) hover:bg-(--orange) rounded"
         >
           <FaWhatsapp />
           Message on WhatsApp
@@ -365,46 +366,46 @@ export default function Layout({ children }) {
 
 
         {/* Main Content */}
-        <main className="flex-grow">
+        <main className="grow">
           {children}
         </main>
 
-        <footer className="bg-[var(--primary-green)] text-white">
+        <footer className="bg-(--primary-green) text-white">
           <div className="max-w-7xl mx-auto px-4 py-12">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
               {/* About Us + Socials */}
               <div>
                 <h4 className="text-lg font-bold mb-3">About Us</h4>
                 <p className="mb-4 text-sm leading-relaxed">
-                  YouLandscape is Kenya's premier landscape architecture firm, creating sustainable, breathtaking outdoor spaces tailored to your vision.
+                  YouLandscape is Kenya&apos;s premier landscape architecture firm, creating sustainable, breathtaking outdoor spaces tailored to your vision.
                 </p>
                 <div className="flex gap-3 mt-2">
-                  <a href="https://www.facebook.com/share/1AeahKt66s/" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--orange)] transition"><FaFacebook /></a>
-                  <a href="https://x.com/YouLandscapeArc?t=13WdP8KbrnBK8pwm7g-yOQ&s=08" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--orange)] transition"><FaTwitter /></a>
-                  <a href="https://www.instagram.com/youlandscapearc?igsh=MXdtdXN3eWFwb3o2cg==" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--orange)] transition"><FaInstagram /></a>
-                  <a href="https://www.linkedin.com/in/youlandscape-architects-257980373?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--orange)] transition"><FaLinkedin /></a>
-                  <a href="https://youtube.com/@youlandscapearchitect?si=1z1QaenWL71j1Ibn" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--orange)] transition"><FaYoutube /></a>
-                  <a href="https://whatsapp.com" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--orange)] transition"><FaWhatsapp /></a>
+                  <a href="https://www.facebook.com/share/1AeahKt66s/" target="_blank" rel="noopener noreferrer" className="hover:text-(--orange) transition"><FaFacebook /></a>
+                  <a href="https://x.com/YouLandscapeArc?t=13WdP8KbrnBK8pwm7g-yOQ&s=08" target="_blank" rel="noopener noreferrer" className="hover:text-(--orange) transition"><FaTwitter /></a>
+                  <a href="https://www.instagram.com/youlandscapearc?igsh=MXdtdXN3eWFwb3o2cg==" target="_blank" rel="noopener noreferrer" className="hover:text-(--orange) transition"><FaInstagram /></a>
+                  <a href="https://www.linkedin.com/in/youlandscape-architects-257980373?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noopener noreferrer" className="hover:text-(--orange) transition"><FaLinkedin /></a>
+                  <a href="https://youtube.com/@youlandscapearchitect?si=1z1QaenWL71j1Ibn" target="_blank" rel="noopener noreferrer" className="hover:text-(--orange) transition"><FaYoutube /></a>
+                  <a href="https://whatsapp.com" target="_blank" rel="noopener noreferrer" className="hover:text-(--orange) transition"><FaWhatsapp /></a>
                 </div>
               </div>
               {/* Quick Links */}
               <div>
                 <h4 className="text-lg font-bold mb-3">Quick Links</h4>
                 <ul className="space-y-2 text-sm">
-                  <li><Link to="/services" className="hover:underline hover:text-[var(--orange)] transition">Services</Link></li>
-                  <li><Link to="/projects" className="hover:underline hover:text-[var(--orange)] transition">Projects</Link></li>
-                  <li><Link to="/about-us/our-company" className="hover:underline hover:text-[var(--orange)] transition">About YouLandscape</Link></li>
-                  <li><Link to="/contact" className="hover:underline hover:text-[var(--orange)] transition">Contact</Link></li>
-                  <li><Link to="/privacy-policy" className="hover:underline hover:text-[var(--orange)] transition">Privacy Policy</Link></li>
+                  <li><Link to="/services" className="hover:underline hover:text-(--orange) transition">Services</Link></li>
+                  <li><Link to="/projects" className="hover:underline hover:text-(--orange) transition">Projects</Link></li>
+                  <li><Link to="/about-us/our-company" className="hover:underline hover:text-(--orange) transition">About YouLandscape</Link></li>
+                  <li><Link to="/contact" className="hover:underline hover:text-(--orange) transition">Contact</Link></li>
+                  <li><Link to="/privacy-policy" className="hover:underline hover:text-(--orange) transition">Privacy Policy</Link></li>
                 </ul>
               </div>
               {/* Contact Info */}
               <div>
                 <h4 className="text-lg font-bold mb-3">Contact</h4>
                 <ul className="space-y-2 text-sm">
-                  <li>Email: <a href="mailto:info@youlandscape.co.ke" className="hover:underline hover:text-[var(--orange)] transition">info@youlandscape.co.ke</a></li>
-                  <li>Phone: <a href="tel:+254707301563" className="hover:underline hover:text-[var(--orange)] transition">+254707301563</a></li>
-                  <li>Address: <a href="https://www.google.com/maps/place/KUSCCO,+Centre,+Nairobi,+KE" target="_blank" rel="noopener noreferrer" className="hover:underline hover:text-[var(--orange)] transition">KUSCCO Centre - Nairobi Region</a></li>
+                  <li>Email: <a href="mailto:info@youlandscape.co.ke" className="hover:underline hover:text-(--orange) transition">info@youlandscape.co.ke</a></li>
+                  <li>Phone: <a href="tel:+254707301563" className="hover:underline hover:text-(--orange) transition">+254707301563</a></li>
+                  <li>Address: <a href="https://www.google.com/maps/place/KUSCCO,+Centre,+Nairobi,+KE" target="_blank" rel="noopener noreferrer" className="hover:underline hover:text-(--orange) transition">KUSCCO Centre - Nairobi Region</a></li>
                   <li>Open: Mon - Sat, 8:00am - 6:00pm</li>
                 </ul>
               </div>
@@ -413,8 +414,8 @@ export default function Layout({ children }) {
                 <h4 className="text-lg font-bold mb-3">Newsletter</h4>
                 <p className="mb-3 text-sm">Get the latest updates and landscaping tips straight to your inbox.</p>
                 <form className="flex flex-col sm:flex-row gap-2">
-                  <input type="email" placeholder="Your email address" className="px-3 py-2 rounded-none text-gray-900 focus:outline-none focus:ring-2 focus:ring-[var(--orange)] w-full sm:w-auto" />
-                  <button type="submit" className="bg-[var(--orange)] text-white px-4 py-2 rounded-none font-semibold hover:bg-[var(--light-green)] transition">Subscribe</button>
+                  <input type="email" placeholder="Your email address" className="px-3 py-2 rounded-none text-gray-900 focus:outline-none focus:ring-2 focus:ring-(--orange) w-full sm:w-auto" />
+                  <button type="submit" className="bg-(--orange) text-white px-4 py-2 rounded-none font-semibold hover:bg-(--light-green) transition">Subscribe</button>
                 </form>
               </div>
             </div>
@@ -423,11 +424,11 @@ export default function Layout({ children }) {
                 © {new Date().getFullYear()} YouLandscape. All rights reserved.
               </p>
               <div className="flex gap-4 text-white text-xs md:text-sm">
-                <Link to="/terms-of-use" className="hover:underline hover:text-[var(--orange)] transition">Terms of use</Link>
+                <Link to="/terms-of-use" className="hover:underline hover:text-(--orange) transition">Terms of use</Link>
                 <span className="hidden md:inline">|</span>
-                <Link to="/privacy-policy" className="hover:underline hover:text-[var(--orange)] transition">Privacy Policy</Link>
+                <Link to="/privacy-policy" className="hover:underline hover:text-(--orange) transition">Privacy Policy</Link>
                 <span className="hidden md:inline">|</span>
-                <Link to="/cookie-policy" className="hover:underline hover:text-[var(--orange)] transition">Cookie Policy</Link>
+                <Link to="/cookie-policy" className="hover:underline hover:text-(--orange) transition">Cookie Policy</Link>
               </div>
             </div>
           </div>
@@ -436,3 +437,7 @@ export default function Layout({ children }) {
     </>
   );
 }
+
+Layout.propTypes = {
+  children: PropTypes.node.isRequired
+};

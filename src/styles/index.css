@@ -1,62 +1,66 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* src/styles/index.css */
+@import "tailwindcss";
 
-:root {
+/* Custom Properties */
+@theme {
   /* Primary Colors */
-  --primary-green: #2F5233;
-  --primary-green-rgb: 47, 82, 51;
-  --secondary-green: #4A7856;
-  --secondary-green-rgb: 74, 120, 86;
-  --light-green: #678b19;
-  --light-green-rgb: 103, 139, 25;
-  --vibrant-green: #7AB730;
-  --vibrant-green-rgb: 122, 183, 48;
+  --color-primary-green: #2F5233;
+  --color-secondary-green: #4A7856;
+  --color-light-green: #678b19;
+  --color-vibrant-green: #7AB730;
   
   /* Accent Colors */
-  --orange: #ee982e;
-  --orange-rgb: 238, 152, 46;
-  --warm-yellow: #FFD700;
-  --warm-yellow-rgb: 255, 215, 0;
-  --terracotta: #E2725B;
-  --terracotta-rgb: 226, 114, 91;
+  --color-orange: #ee982e;
+  --color-warm-yellow: #FFD700;
+  --color-terracotta: #E2725B;
   
   /* Blues */
-  --secondary-blue: #1a3c5c;
-  --secondary-blue-rgb: 57, 122, 183;
-  --light-blue: #6ba8e8;
-  --light-blue-rgb: 139, 184, 232;
-  --sky-blue: #87CEEB;
-  --sky-blue-rgb: 135, 206, 235;
-  
+  --color-secondary-blue: #1a3c5c;
+  --color-light-blue: #6ba8e8;
+  --color-sky-blue: #87CEEB;
   
   /* Neutrals */
-  --off-white: #F5F7F4;
-  --off-white-rgb: 245, 247, 244;
-  --pure-white: #FFFFFF;
-  --pure-white-rgb: 255, 255, 255;
-  --text-dark: #333333;
-  --text-dark-rgb: 51, 51, 51;
-  --soft-gray: #E8E8E8;
-  --soft-gray-rgb: 232, 232, 232;
+  --color-off-white: #F5F7F4;
+  --color-pure-white: #FFFFFF;
+  --color-text-dark: #333333;
+  --color-soft-gray: #E8E8E8;
+  
+  /* Spacing */
+  --spacing-section: 4rem;
+  --spacing-section-md: 6rem;
 }
 
-/* Modern Design Elements */
-@layer components {
-  .card-hover {
-    @apply transition-all duration-300 hover:shadow-lg hover:scale-[1.02];
+/* Custom Utilities */
+@utility card-hover {
+  transition: all 0.3s ease;
+  &:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    transform: scale(1.02);
   }
+}
+
+@utility gradient-text {
+  background: linear-gradient(to right, var(--color-primary-green), var(--color-vibrant-green));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+@utility nature-gradient {
+  background: linear-gradient(to bottom right, 
+    var(--color-primary-green), 
+    var(--color-secondary-green), 
+    var(--color-light-green)
+  );
+}
+
+@utility section-padding {
+  padding-top: var(--spacing-section);
+  padding-bottom: var(--spacing-section);
   
-  .gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-[var(--primary-green)] to-[var(--vibrant-green)];
-  }
-  
-  .nature-gradient {
-    @apply bg-gradient-to-br from-[var(--primary-green)] via-[var(--secondary-green)] to-[var(--light-green)];
-  }
-  
-  .section-padding {
-    @apply py-16 md:py-24;
+  @media (min-width: 768px) {
+    padding-top: var(--spacing-section-md);
+    padding-bottom: var(--spacing-section-md);
   }
 }
 
@@ -71,14 +75,32 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--soft-gray);
+  background: var(--color-soft-gray);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--primary-green);
+  background: var(--color-primary-green);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--secondary-green);
+  background: var(--color-secondary-green);
+}
+
+/* Legacy CSS Variables for Compatibility */
+:root {
+  --primary-green: var(--color-primary-green);
+  --secondary-green: var(--color-secondary-green);
+  --light-green: var(--color-light-green);
+  --vibrant-green: var(--color-vibrant-green);
+  --orange: var(--color-orange);
+  --warm-yellow: var(--color-warm-yellow);
+  --terracotta: var(--color-terracotta);
+  --secondary-blue: var(--color-secondary-blue);
+  --light-blue: var(--color-light-blue);
+  --sky-blue: var(--color-sky-blue);
+  --off-white: var(--color-off-white);
+  --pure-white: var(--color-pure-white);
+  --text-dark: var(--color-text-dark);
+  --soft-gray: var(--color-soft-gray);
 }
